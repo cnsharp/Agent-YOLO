@@ -47,7 +47,9 @@ Before reading or writing any of the four sibling projects:
 - `resources/agents.json` — the agent registry (id, displayName, command,
   baseArgs, skipFlag, resumeFlag, icon, url, install, skipEnv). Single source
   of truth for the agent list; **all three ends (IntelliJ, VS, VSC) now carry
-  the same schema**. `icon` is a canonical path `/icons/agents/<id>.<ext>`;
+  the same schema**. `icon` stores only the **filename** (`<id>.<ext>`); each
+  end prepends its own icon directory before resolving (`/icons/agents/` for
+  IntelliJ, `Resources/icons/agents/` for VS, `media/agents/` for VSC);
   `baseArgs` is a shared launch default (each end may let the user override it);
   `install` is consumed only by the JVM ends.
 - `resources/icons/agents/<id>.svg` | `.png` — bundled agent icons. SVG is the
@@ -73,10 +75,10 @@ Before reading or writing any of the four sibling projects:
 1. **Language / runtime** is decided by each sub-project; `Meta/` holds only
    shared assets, not build configuration.
 2. **Keep icons and i18n text consistent across all platforms.**
-   - **VSC ships only `.png` icons.** Its loader resolves the canonical `icon`
-     path by basename and falls back to `<id>.png` when the referenced `.svg`
-     is absent — so VSC consumes the same `agents.json` as the JVM ends without
-     changing the `icon` field.
+   - **VSC ships only `.png` icons.** Its loader takes the `icon` filename,
+     strips the extension, and falls back to `<id>.png` when the referenced
+     `.svg` is absent — so VSC consumes the same `agents.json` as the JVM ends
+     without changing the `icon` field.
 3. **i18n baseline = IntelliJ `.properties`.** Any change to IntelliJ's i18n
    resource files **MUST** be synced into `Meta/resources/messages/`.
 4. **Link RegExp is generated from one Meta source.** Hand-editing the patterns
@@ -100,10 +102,11 @@ Before reading or writing any of the four sibling projects:
    - `YOLO-VS/agents.json`
    - `ai-agents-terminal-vsc/agents.json` → then port to `YOLO-VSC/agents.json` (VS Code
      upstream-first, per §2).
-   The `icon` field uses the canonical path `/icons/agents/<id>.<ext>` on every
-   end. `YOLO-VS` maps it onto its embedded `Resources/icons/agents/` assets,
-   and the VSC ends fall back to `<id>.png` under `media/agents/` (VSC ships
-   PNGs only) — so **no per-end path editing is required**. Always include
+   The `icon` field stores only the filename `<id>.<ext>` on every end; each
+   end prepends its own icon directory before resolving (`/icons/agents/` for
+   IntelliJ, `Resources/icons/agents/` for VS, `media/agents/` for VSC). The
+   VSC ends fall back to `<id>.png` (VSC ships PNGs only) — so **no per-end
+   path editing is required**. Always include
    not-yet-enabled fields (e.g. `install`, `baseArgs`) — they are part of the
    registry. `baseArgs` is a shared launch default; VSC additionally lets the
    user override it per agent via settings.

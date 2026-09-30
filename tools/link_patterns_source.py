@@ -39,8 +39,8 @@ EXT_VS_EXTRA = (
     # project / build files
     "csproj|vbproj|fsproj|sln|slnx|props|targets|vcxproj|vcxitems|user|"
     "ruleset|publishproj|vsix|nuspec|appxmanifest|"
-    # packaging / asset / misc
-    "manifest|resx|settings|dbml|edmx|dll|exe"
+    # packaging / asset / misc (file types the IDE can actually open — NO binaries like dll/exe)
+    "manifest|resx|settings|dbml|edmx"
 )
 
 MAX_MATCHES_PER_LINE = 50

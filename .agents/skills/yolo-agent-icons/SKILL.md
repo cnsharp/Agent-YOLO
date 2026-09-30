@@ -36,8 +36,9 @@ These are the user's firm requirements. Breaking any one means the icon gets rej
 - **Bundled (built-in agents):** `src/main/resources/icons/agents/<id>.svg` or `.png`.
   The `<id>` must match the `id` field in `agents.json` (lower-case, e.g. `claude`,
   `codex`, `grok`, `rovo`).
-- **agents.json reference:** each entry's `icon` field is the classpath path, e.g.
-  `"icon": "/icons/agents/claude.svg"`. The registry reads it via
+- **agents.json reference:** each entry's `icon` field stores just the **filename** (the registry
+  is path-agnostic; each end prepends its own icons dir before resolving). e.g.
+  `"icon": "claude.svg"`. The registry reads it via
   `AgentRegistry.iconFor(id)` (`AgentRegistry.kt:43`); `AgentIcons.forAgent` (`terminal/AgentIcons.kt:53`)
   falls back to this, then to `AllIcons.Actions.Lightning`.
 - **User-added custom tools:** their icon is NOT bundled — it is a local path / http URL
@@ -102,8 +103,9 @@ missed when `copilot_dark` / `grok_dark` were wrongly monochromed:
 
 ## Validation gate
 
-After installing, confirm there is no dangling `icon` path in `agents.json` (every referenced
-`/icons/agents/<id>.<ext>` file must exist on disk, and no stray `.DS_Store`), and that the
+After installing, confirm there is no dangling `icon` in `agents.json` (every referenced
+`<id>.<ext>` icon file must exist under `src/main/resources/icons/agents/`, and no stray
+`.DS_Store`), and that the
 project still compiles:
 
 ```bash
@@ -112,7 +114,8 @@ project still compiles:
 
 If `src/test/kotlin/com/cnsharp/yolo/settings/AgentRegistryTest.kt` exists, also run it — it
 asserts `agents[0].id == "claude"`, `agents[1].id == "codex"`, and
-`claude.icon == "/icons/agents/claude.svg"`. NOTE: a copy may appear under `bin/test/` but that
+`claude.icon == "claude.svg"` (the raw filename from `agents.json`). NOTE: a copy may appear under
+`bin/test/` but that
 is a stale, git-ignored IDEA output dir (not Gradle's `build/`) — do NOT rely on it, and do not
 treat its presence as the test source.
 
@@ -123,5 +126,5 @@ treat its presence as the test source.
 - [ ] Original brand colors preserved.
 - [ ] `_dark` variant added only where the base is monochrome/near-black (colored & two-tone-visible bases keep none); `_dark` is a `#BDBDBD` recolor of the same paths, not a reshape.
 - [ ] File at `src/main/resources/icons/agents/<id>.<svg|png>`, square-ish, not tiny.
-- [ ] `agents.json` `icon` field points at `/icons/agents/<id>.<ext>`.
+- [ ] `agents.json` `icon` field is just the filename `<id>.<ext>` (path-agnostic).
 - [ ] No dangling/missing icon path; `AgentRegistryTest` green.
