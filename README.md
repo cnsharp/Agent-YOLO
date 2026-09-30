@@ -1,8 +1,8 @@
 # Agent YOLO
 
-Agent YOLO is an AI-agent extender that brings a unified "YOLO panel" of AI coding agents
-(Cursor, Claude, Codex and many more) into your IDE.
-It ships across three IDE families — JetBrains, Visual Studio, and Visual Studio Code.
+Agent YOLO is an AI-agent extender that brings a unified "YOLO panel" for AI coding agents
+(Cursor, Claude, Codex, and many more) into your IDE.
+It is available across three IDE families — JetBrains, Visual Studio, and Visual Studio Code.
 
 ## Agent YOLO Family
 
@@ -31,6 +31,4 @@ It ships across three IDE families — JetBrains, Visual Studio, and Visual Stud
 | Agent YOLO for Visual Studio | https://github.com/cnsharp/YOLO-VS |
 | Agent YOLO for Visual Studio Code | https://github.com/cnsharp/YOLO-VSC |
 
-> **Related:** [`ai-agents-vsc`](https://github.com/cnsharp/ai-agents-terminal-vsc) is a side project and the
-> upstream of *Agent YOLO for Visual Studio Code* (YOLO-VSC is a fork of it). Agent/resource changes on the
-> VS Code side should be maintained in `ai-agents-vsc` first, then ported to YOLO-VSC.
+> **Related:** [`ai-agents-terminal-vsc`](https://github.com/cnsharp/ai-agents-terminal-vsc) is a side project that provides a Terminal Agent Launcher on the status bar, and serves as the upstream of *Agent YOLO for Visual Studio Code* (YOLO-VSC is a fork of it). Agent and resource changes on the VS Code side should be made in `ai-agents-terminal-vsc` first, then ported to YOLO-VSC.
