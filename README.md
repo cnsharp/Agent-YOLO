@@ -66,7 +66,6 @@ The agent list below is shared across the whole **Agent YOLO** family (IntelliJ,
 | pi | Pi | `pi` | <a href="https://pi.dev/"><img src="resources/icons/agents/pi.svg" height="20" alt="Pi"></a> |
 | droid | Droid | `droid` | <a href="https://factory.ai/"><img src="resources/icons/agents/droid.svg" height="20" alt="Droid"></a> |
 | aug | Auggie | `auggie` | <a href="https://augmentcode.com/"><img src="resources/icons/agents/aug.svg" height="20" alt="Auggie"></a> |
-| rovo | Rovo Dev | `rovo` | <a href="https://rovo.atlassian.com/"><img src="resources/icons/agents/rovo.svg" height="20" alt="Rovo Dev"></a> |
 | prime-agent | Prime Agent | `prime-agent` | <a href="https://www.primeintellect.ai/"><img src="resources/icons/agents/prime-agent.png" height="20" alt="Prime Agent"></a> |
 | autohand | Autohand | `autohand` | <a href="https://autohand.ai/"><img src="resources/icons/agents/autohand.svg" height="20" alt="Autohand"></a> |
 | command-code | Command Code | `command-code` | <a href="https://commandcode.ai/"><img src="resources/icons/agents/command-code.svg" height="20" alt="Command Code"></a> |
