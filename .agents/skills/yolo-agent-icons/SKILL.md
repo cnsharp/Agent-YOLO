@@ -100,6 +100,11 @@ missed when `copilot_dark` / `grok_dark` were wrongly monochromed:
 - CSS `@media (prefers-color-scheme: dark)` inside an SVG is **ignored** by `IconLoader` — it
   renders the default (usually black) fill on dark themes, so such an icon still needs a `_dark`
   (e.g. `aug`, `autohand`).
+- SVG `<mask>` (whether `mask-type:alpha` or a gradient/luminance mask) is **dropped** by
+  `IconLoader`'s renderer (Batik): the masked content becomes invisible on **both** themes, not just
+  dark. If a source logo relies on a mask for its shape, ship a `_dark` (and base) variant with the
+  mask removed and the path given a solid fill instead (e.g. `poolside` — recolor the real mark to
+  `#BDBDBD` for the `_dark`, keep the brand color for the base).
 
 ## Validation gate
 
