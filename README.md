@@ -71,7 +71,7 @@ The agent list below is shared across the whole **Agent YOLO** family (IntelliJ,
 | command-code | Command Code | `command-code` | <a href="https://commandcode.ai/"><img src="resources/icons/agents/command-code.svg" height="20" alt="Command Code"></a> |
 | ante | Ante | `ante` | <a href="https://antigma.ai/"><img src="resources/icons/agents/ante.svg" height="20" alt="Ante"></a> |
 | codebuff | Codebuff | `codebuff` | <a href="https://codebuff.com/"><img src="resources/icons/agents/codebuff.png" height="20" alt="Codebuff"></a> |
-| omp | OMP | `omp` | <a href="https://ohmyposh.dev/"><img src="resources/icons/agents/omp.svg" height="20" alt="OMP"></a> |
+| omp | Oh My Pi | `omp` | <a href="https://omp.sh/"><img src="resources/icons/agents/omp.svg" height="20" alt="Oh My Pi"></a> |
 | agoragentic | Agoragentic | `agoragentic-mcp` | <a href="https://agoragentic.com"><img src="resources/icons/agents/agoragentic.png" height="20" alt="Agoragentic"></a> |
 | cortex-code | Cortex Code | `cortex` | <a href="https://docs.snowflake.com/en/user-guide/cortex-code/cortex-code"><img src="resources/icons/agents/cortex-code.png" height="20" alt="Cortex Code"></a> |
 | corust-agent | Corust Agent | `corust` | <a href="https://corust.ai/"><img src="resources/icons/agents/corust-agent.svg" height="20" alt="Corust Agent"></a> |

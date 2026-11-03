@@ -89,7 +89,7 @@ missed when `copilot_dark` / `grok_dark` were wrongly monochromed:
 
 - **Create a `_dark` ONLY when the base symbol is monochrome / near-black** and disappears on a
   dark background: recolor the symbol to light gray `#BDBDBD` (matches the existing `codex_dark`
-  / `omp_dark` convention). Keep the exact same paths and `viewBox` — recolor fills only, do not
+  convention). Keep the exact same paths and `viewBox` — recolor fills only, do not
   reshape. Examples: `command-code` (and the pre-existing `codex`).
 - **Do NOT create a `_dark` for colored brand symbols** (e.g. `copilot`, `grok`): they stay
   visible on dark, and recoloring them to mono would violate rule 3.
