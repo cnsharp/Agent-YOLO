@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:agent-yolo:agents.schema:2",
+  "title": "Agent YOLO shared agent registry",
+  "description": "Single source of truth for the agent list. schemaVersion is the compatibility contract (integer, bump only on breaking changes); updatedAt is the data-snapshot date (bump on data re-collection, no schema change). v1 = legacy bare array (no version field, still used by the three ends); v2 = this object shape.",
+  "type": "object",
+  "required": ["schemaVersion", "updatedAt", "agents"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "const": 2,
+      "description": "Breaking-change counter. Consumers must reject unknown majors. See Meta/AGENTS.md §4."
+    },
+    "updatedAt": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+      "description": "ISO date of the last status/latestVersion data snapshot."
+    },
+    "agents": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/agent" }
+    }
+  },
+  "$defs": {
+    "agent": {
+      "type": "object",
+      "required": [
+        "id", "displayName", "command", "baseArgs", "skipFlag", "resumeFlag",
+        "icon", "url", "install", "uninstall", "status", "latestVersion",
+        "platformSupport"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+        "displayName": { "type": "string", "minLength": 1 },
+        "command": { "type": "string", "minLength": 1 },
+        "baseArgs": { "type": "string" },
+        "skipFlag": { "type": "string" },
+        "resumeFlag": { "type": "string" },
+        "icon": { "type": "string", "pattern": "\\.(svg|png)$" },
+        "url": { "type": "string" },
+        "status": {
+          "type": "string",
+          "enum": ["active", "maintaining", "stale", "unknown"],
+          "description": "Vendor-lifecycle snapshot; company-level terminal states are not auto-assigned."
+        },
+        "latestVersion": { "type": "string", "description": "May be empty when no queryable source." },
+        "platformSupport": { "$ref": "#/$defs/platformSupport" },
+        "install": { "$ref": "#/$defs/install" },
+        "uninstall": { "$ref": "#/$defs/uninstall" },
+        "skipEnv": { "$ref": "#/$defs/skipEnv" }
+      }
+    },
+    "platformSupport": {
+      "type": "object",
+      "required": ["darwin", "win32", "linux"],
+      "additionalProperties": false,
+      "properties": {
+        "darwin": { "$ref": "#/$defs/platformValue" },
+        "win32": { "$ref": "#/$defs/platformValue" },
+        "linux": { "$ref": "#/$defs/platformValue" }
+      }
+    },
+    "platformValue": {
+      "type": "string",
+      "enum": ["supported", "unsupported", "viaWsl"]
+    },
+    "install": {
+      "type": "object",
+      "required": ["type"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "type": "string", "enum": ["shell", "npm", "pip", "brew"] },
+        "pkg": { "type": "string" },
+        "cmd": { "type": "string" },
+        "cmdWin": { "type": "string" },
+        "updateCmd": { "type": "string" },
+        "latest": {
+          "type": "object",
+          "description": "Version-source map. npm/pypi/github/brew = package name (string); web = {url, pattern} object.",
+          "additionalProperties": {
+            "oneOf": [
+              { "type": "string" },
+              {
+                "type": "object",
+                "required": ["url", "pattern"],
+                "additionalProperties": false,
+                "properties": {
+                  "url": { "type": "string" },
+                  "pattern": { "type": "string" }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "uninstall": {
+      "type": "object",
+      "required": ["cmd"],
+      "additionalProperties": false,
+      "properties": {
+        "cmd": { "type": "string", "minLength": 1, "description": "mac/Linux shell command." },
+        "cmdWin": { "type": "string", "description": "Windows command; omitted when platformSupport.win32 = unsupported." }
+      }
+    },
+    "skipEnv": {
+      "type": "object",
+      "required": ["name", "value"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "value": { "type": "string" }
+      }
+    }
+  }
+}
