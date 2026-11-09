@@ -223,7 +223,7 @@
         "linux": "supported"
       },
       "uninstall": {
-        "cmd": "rm -f ~/.local/bin/cn ~/.npm-global/bin/cn; rm -rf ~/.local/share/fnm",
+        "cmd": "npm uninstall -g @continuedev/cli; rm -rf ~/.local/share/fnm",
         "cmdWin": "Remove-Item -Recurse -Force \"$env:LOCALAPPDATA\\fnm\",\"$env:USERPROFILE\\.npm-global\" -ErrorAction SilentlyContinue"
       },
       "install": {
@@ -1191,7 +1191,7 @@
         "linux": "supported"
       },
       "uninstall": {
-        "cmd": "rm -rf ~/.harn; rm -f ~/.local/bin/harn",
+        "cmd": "rm -rf ~/.harn; rm -f ~/.local/bin/harn ~/bin/harn",
         "cmdWin": "Remove-Item -Recurse -Force \"$env:LOCALAPPDATA\\harn\" -ErrorAction SilentlyContinue"
       },
       "install": {
