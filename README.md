@@ -57,6 +57,7 @@ The agent list below is shared across the whole **Agent YOLO** family (IntelliJ,
 | trae | TraeCode | `traecli` | <a href="https://www.trae.ai/"><img src="resources/icons/agents/trae.svg" height="20" alt="TraeCode"></a> |
 | codebuddy | CodeBuddy | `codebuddy` | <a href="https://www.codebuddy.ai/"><img src="resources/icons/agents/codebuddy.svg" height="20" alt="CodeBuddy"></a> |
 | qoder | Qoder | `qoder` | <a href="https://qoder.com/"><img src="resources/icons/agents/qoder.svg" height="20" alt="Qoder"></a> |
+| qodercn | Qoder CN | `qodercn` | <a href="https://qoder.cn/"><img src="resources/icons/agents/qodercn.svg" height="20" alt="Qoder CN"></a> |
 | devin | Devin | `devin` | <a href="https://devin.ai/"><img src="resources/icons/agents/devin.svg" height="20" alt="Devin"></a> |
 | grok | Grok | `grok` | <a href="https://grok.com/"><img src="resources/icons/agents/grok.svg" height="20" alt="Grok"></a> |
 | antigravity | Antigravity | `agy` | <a href="https://antigravity.google/"><img src="resources/icons/agents/antigravity.png" height="20" alt="Antigravity"></a> |

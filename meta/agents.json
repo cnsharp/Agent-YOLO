@@ -517,6 +517,31 @@
       }
     },
     {
+      "id": "qodercn",
+      "baseArgs": "",
+      "displayName": "Qoder CN",
+      "command": "qodercn",
+      "skipFlag": "--dangerously-skip-permissions",
+      "resumeFlag": "",
+      "icon": "qodercn.svg",
+      "url": "https://qoder.cn/",
+      "status": "active",
+      "latestVersion": "",
+      "platformSupport": {
+        "darwin": "supported",
+        "win32": "supported",
+        "linux": "supported"
+      },
+      "uninstall": {
+        "cmd": "npm uninstall -g @qodercn-ai/qoderclicn"
+      },
+      "install": {
+        "type": "npm",
+        "pkg": "@qodercn-ai/qoderclicn",
+        "updateCmd": "qodercn update"
+      }
+    },
+    {
       "id": "devin",
       "baseArgs": "",
       "displayName": "Devin",

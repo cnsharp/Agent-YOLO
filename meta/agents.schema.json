@@ -43,8 +43,8 @@
         "url": { "type": "string" },
         "status": {
           "type": "string",
-          "enum": ["active", "maintaining", "stale", "unknown"],
-          "description": "Vendor-lifecycle snapshot; company-level terminal states are not auto-assigned."
+          "enum": ["active", "maintaining", "stale", "closed", "unknown"],
+          "description": "Vendor-lifecycle snapshot. closed = company defunct / project terminated (manually assigned); other states are auto-collected."
         },
         "latestVersion": { "type": "string", "description": "May be empty when no queryable source." },
         "platformSupport": { "$ref": "#/$defs/platformSupport" },
