@@ -11,14 +11,16 @@ produce identical results. Keep this file in sync with `agents.schema.json` (`st
 - `remote` — the catalog fetched from the official URL at startup (v2 envelope `{schemaVersion, updatedAt, agents}`).
   Already unwrapped to the `agents` array and validated before this step.
 - `installed` — set of `command` strings detected on the local PATH (from each end's install cache).
-- `userAdded` — set of `id`s the user has explicitly added/configured in settings; these are never dropped or overridden.
+- `userAdded` — set of `id`s the user has explicitly added/configured in settings; these are never dropped (their field overrides live in each end's settings layer and are applied after the merge).
 
 ## Rules (in priority order)
 
 1. **Seed with built-in.** `result` starts as a map of every `builtin` entry keyed by `id`
    (a remote omission never deletes a built-in agent — remote is an incremental overlay).
 2. **Overlay each remote entry by `id`:**
-   - If `id ∈ userAdded` → keep the user's version as-is; do NOT override, do NOT filter.
+   - If `id ∈ userAdded` → `result[id] = entry` — add/overlay it but do NOT apply the
+     outdated filter (the user's own field overrides are applied later by each end's
+     settings layer; the entry must still be present in the merged registry).
    - Else if `isOutdatedAndUninstalled(entry)` → **remove `id` from `result` entirely**
      (also drop the built-in copy of the same id) and skip this remote entry.
    - Else → `result[id] = entry` (override built-in, or add new).
@@ -26,7 +28,7 @@ produce identical results. Keep this file in sync with `agents.schema.json` (`st
    - `entry.command ∉ installed` (not found on local PATH), AND
    - `status ∈ {"stale", "maintaining", "closed"}`.
    An installed outdated agent is kept so the user can still see/manage/uninstall it.
-4. **User-added exemption** overrides rule 2/3 for any `id ∈ userAdded`.
+4. **User-added exemption** overrides rule 3's filter for any `id ∈ userAdded` (the entry is still added/overlaid by rule 2 — it is never silently skipped).
 
 ## Guards
 
@@ -49,7 +51,8 @@ function mergeCatalogs(builtin, remote, installed, userAdded):
     for entry in remote:                            # rule 2
         id = entry.id
         if id in userAdded:                         # rule 4
-            continue                                # keep user version
+            result[id] = entry                      # keep it, but skip the outdated filter
+            continue
         if isOutdatedAndUninstalled(entry, installed):
             result.remove(id)                       # drop built-in copy too
             continue
