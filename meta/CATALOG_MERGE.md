@@ -13,8 +13,9 @@ takes no notion of "user added".
 
 ## Inputs
 
-- `builtin` — the catalog bundled in the plugin (`agents.json` parsed at build time, legacy v1 shape).
-  Built-in entries have no `status`; treat them as `"active"`.
+- `builtin` — the catalog bundled in the plugin (`agents.json`, now v2 with a `status` on every entry).
+  Parsers must still accept legacy v1 arrays (entries there have no `status`; treat them as `"active"`) —
+  v1 is read-only legacy input, never authored anew.
 - `remote` — the catalog fetched from the official URL at startup (v2 envelope `{schemaVersion, updatedAt, agents}`).
   Already unwrapped to the `agents` array and validated before this step.
 - `installed` — set of `command` strings detected on the local PATH (from each end's install cache).

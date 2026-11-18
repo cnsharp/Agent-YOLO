@@ -35,7 +35,7 @@ It is available across three IDE families — JetBrains, Visual Studio, and Visu
 
 ## Supported agents
 
-The agent list below is shared across the whole **Agent YOLO** family (IntelliJ, Visual Studio, and VS Code editions). It is generated from `agents.json` in the [YOLO-VS](https://github.com/cnsharp/YOLO-VS) repository — that file is the single source of truth, so new or changed agents are added there and synced to the other editions. Any agent not listed works as a custom tool: configure it in the IDE settings and fill in its flags yourself.
+The agent list below is shared across the whole **Agent YOLO** family (IntelliJ, Visual Studio, and VS Code editions). It is generated from [`meta/agents.json`](meta/agents.json) in this repository (the v2 registry, `schemaVersion: 2`) — that file is the single source of truth, so new or changed agents are added there and copied verbatim to all four editions. The clients also hot-update from it at startup. Any agent not listed works as a custom tool: configure it in the IDE settings and fill in its flags yourself.
 
 | id | display name | command | website |
 |---|---|---|---|
