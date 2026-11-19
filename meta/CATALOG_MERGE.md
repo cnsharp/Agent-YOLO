@@ -2,7 +2,8 @@
 
 This is the **single canonical description** of how each client (IntelliJ / VS / VS Code)
 merges the remote catalog with its bundled catalog at startup. The three ports MUST
-produce identical results. Keep this file in sync with `agents.schema.json` (`status`).
+produce identical results. Keep this file in sync with `agents.schema.json`
+(`status`, `platformSupport`, `lastReleaseAt`).
 
 **Scope — this is stage A only.** The merge operates purely on the two *official*
 catalogs (bundled + remote). User-added / user-configured agents live **only in local
@@ -30,16 +31,28 @@ takes no notion of "user added".
    - Else → `result[id] = entry` (override built-in, or add new).
 3. **`isOutdatedAndUninstalled(entry)`** = BOTH conditions hold:
    - `entry.command ∉ installed` (not found on local PATH), AND
-   - `status ∈ {"stale", "maintaining", "closed"}`.
-   An installed outdated agent is kept so the user can still see/manage/uninstall it.
+   - `status == "closed"` — the **single terminal state** (product/service
+     discontinued / offline, see `agents.schema.json`).
+   An installed `closed` agent is kept; Manage Agents shows it with a status flag
+   so the user can still see/manage/uninstall it. `stale` and `maintaining` are
+   NOT filtered: they describe development pace, not end-of-life.
 
 User-added / user-configured agents are **not an input here** — they are local-only and
 are re-applied by each end's settings layer in stage B, after this merge.
 
 ## Guards
 
-- `status` is whitelisted: any value outside `active|maintaining|stale|closed|unknown`
+- `status` is whitelisted: any value outside
+  `active|maintaining|stale|closed|unknown`
   is treated as `unknown` (never filtered).
+- **OS filter (stage A, at the catalog publish point):** drop any entry whose
+  `platformSupport[<current OS>]` is `"unsupported"` (OS keys: `darwin` / `win32` /
+  `linux`). `viaWsl` (win32 via WSL), `supported`, and a **missing**
+  `platformSupport` (legacy v1 entries / user-defined overrides) are kept. Each
+  end applies it where the catalog is published to the live registry, so the
+  bundled, cached and merged lists all pass through the same filter and every
+  consumer sees the same result. User-defined agents live in the settings layer
+  and are never in this input, so they cannot be dropped by this filter.
 - If `result` is empty after filtering → discard it and fall back to the full `builtin` list
   (never show an empty catalog).
 - The merge depends on the async install scan. Run it only after the install set is ready;
@@ -65,7 +78,7 @@ function mergeCatalogs(builtin, remote, installed):
     return values(result)
 
 function isOutdatedAndUninstalled(entry, installed):
-    OUTDATED = {"stale", "maintaining", "closed"}
+    OUTDATED = {"closed"}                           # single terminal state
     status = canonStatus(entry.status)              # unknown if not whitelisted
     return (entry.command not in installed) and (status in OUTDATED)
 

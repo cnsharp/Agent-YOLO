@@ -44,9 +44,14 @@
         "status": {
           "type": "string",
           "enum": ["active", "maintaining", "stale", "closed", "unknown"],
-          "description": "Vendor-lifecycle snapshot. closed = company defunct / project terminated (manually assigned); other states are auto-collected."
+          "description": "Vendor-lifecycle snapshot. closed is the single terminal state, manually assigned only: the product/service has been discontinued (offline). Other states are auto-collected."
         },
         "latestVersion": { "type": "string", "description": "May be empty when no queryable source." },
+        "lastReleaseAt": {
+          "type": "string",
+          "pattern": "^([0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z)?$",
+          "description": "UTC+0 (Z) timestamp of the agent's most recent upstream release, probed from public release signals. Empty string when no queryable source. Re-collect periodically."
+        },
         "platformSupport": { "$ref": "#/$defs/platformSupport" },
         "install": { "$ref": "#/$defs/install" },
         "uninstall": { "$ref": "#/$defs/uninstall" },
